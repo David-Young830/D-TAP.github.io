@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="D-TAP: Unified e-commerce, logistics, and advertising ecosystem. Scale your business globally.">
+    <meta name="theme-color" content="#004aad">
+    <title>D-TAP | Unified Commerce, Logistics & Advertising</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        swiftBlue: '#004aad',
+                        swiftOrange: '#ff6600',
+                        deepNavy: '#002a66',
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;900&display=swap');
+        * { -webkit-font-smoothing: antialiased; }
+        body { font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        .glass-nav { background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px); }
+        .service-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .service-card:hover { transform: translateY(-8px); }
+        .service-icon { transition: transform 0.3s ease; }
+        .service-card:hover .service-icon { transform: scale(1.1) rotate(-5deg); }
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-50">
+
+    <!-- Top Banner -->
+    <div class="bg-deepNavy text-white py-2 px-6 text-[11px] font-bold uppercase tracking-[0.2em] hidden lg:flex justify-between items-center" role="banner">
+        <span>Global Business Infrastructure | ISO 27001 Certified</span>
+        <div class="flex space-x-6">
+            <a href="#investor-relations" class="hover:text-swiftOrange transition-colors">Investor Relations</a>
+            <a href="#api" class="hover:text-swiftOrange transition-colors">Enterprise API</a>
+            <a href="#support" class="hover:text-swiftOrange transition-colors">Support</a>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="glass-nav border-b sticky top-0 z-[100]">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="#home" class="flex items-center space-x-2 group">
+                <div class="bg-white p-2 rounded-lg shadow-lg shadow-blue-300 group-hover:shadow-blue-400 transition-shadow">
+                    <img src="D-TAP.png" alt="D-TAP logo" class="h-9 w-auto rounded-md" loading="lazy">
+                </div>
+                <span class="text-2xl font-black text-swiftBlue tracking-tighter hover:text-deepNavy transition-colors">D-TAP</span>
+            </a>
+            
+            <div class="hidden lg:flex items-center space-x-10 text-sm font-bold text-slate-600">
+                <a href="#marketplace" class="hover:text-swiftBlue transition-colors">Marketplace</a>
+                <a href="#logistics" class="hover:text-swiftBlue transition-colors">Logistics</a>
+                <a href="#advertising" class="hover:text-swiftBlue transition-colors">Advertising</a>
+                <a href="#solutions" class="hover:text-swiftBlue transition-colors">Solutions</a>
+            </div>
+
+            <div class="flex items-center space-x-4">
+                <a href="Password.html" class="text-swiftBlue font-bold text-sm px-4 hover:text-deepNavy transition-colors">
+                    Login Portal
+                </a>
+                <a href="emarket.html" class="bg-swiftBlue text-white px-6 py-3 rounded-xl font-bold text-sm hover:bg-swiftOrange transition-colors shadow-lg shadow-blue-100 hover:shadow-orange-100">
+                    Get Started
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-[85vh] flex items-center bg-slate-900 overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-gradient-to-r from-deepNavy via-deepNavy/80 to-transparent z-10"></div>
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?q=80&w=2000" 
+                 alt="Global commerce and logistics infrastructure" 
+                 class="w-full h-full object-cover" 
+                 loading="lazy">
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 relative z-20 w-full">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center space-x-2 bg-white/10 border border-white/20 px-3 py-1 rounded-full text-white text-xs font-bold mb-6">
+                    <span class="flex h-2 w-2 rounded-full bg-swiftOrange animate-pulse"></span>
+                    <span>NEW: D-TAP Enterprise Ad Manager is Live</span>
+                </div>
+                <h1 class="text-6xl lg:text-8xl font-black text-white leading-[0.9] mb-6">
+                    TRADE. <br>MOVE. <br><span class="text-swiftOrange italic">SCALE.</span>
+                </h1>
+                <p class="text-xl text-slate-300 mb-10 leading-relaxed max-w-xl">
+                    D-TAP is the world's first integrated ecosystem combining high-velocity e-commerce, global logistics, and hyper-targeted advertising.
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <button class="bg-swiftOrange text-white px-10 py-5 rounded-2xl font-black text-lg hover:shadow-2xl hover:bg-orange-600 transition-all focus:outline-none focus:ring-2 focus:ring-swiftOrange focus:ring-offset-2">
+                        Open Your Hub
+                    </button>
+                    <button class="bg-white/10 backdrop-blur-md text-white border border-white/30 px-10 py-5 rounded-2xl font-black text-lg hover:bg-white/20 transition-all focus:outline-none focus:ring-2 focus:ring-white">
+                        View Ecosystem
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Stats Section -->
+    <section class="bg-white py-12 border-b">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div>
+                    <p class="text-4xl font-black text-swiftBlue mb-1">$4.2B+</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Transaction Volume</p>
+                </div>
+                <div>
+                    <p class="text-4xl font-black text-swiftBlue mb-1">12ms</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Ad Placement Speed</p>
+                </div>
+                <div>
+                    <p class="text-4xl font-black text-swiftBlue mb-1">195+</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Countries Reached</p>
+                </div>
+                <div>
+                    <p class="text-4xl font-black text-swiftBlue mb-1">99.9%</p>
+                    <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Delivery Success</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-24 max-w-7xl mx-auto px-6">
+        <div class="text-center mb-20">
+            <h2 class="text-4xl font-black text-deepNavy mb-4">A UNIFIED OPERATING SYSTEM</h2>
+            <p class="text-slate-500 font-medium">Why manage three platforms when you only need one Hub?</p>
+        </div>
+
+        <div class="grid lg:grid-cols-3 gap-10">
+            <!-- Marketplace Card -->
+            <div id="marketplace" class="service-card bg-white p-10 rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                <div class="service-icon w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center mb-8">
+                    <i class="fas fa-shopping-bag text-swiftBlue text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-black text-deepNavy mb-4">E-Marketplace</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-8">
+                    Connect directly with verified global vendors. Our escrow-backed payment system ensures every trade is secure and transparent.
+                </p>
+                <ul class="space-y-3 mb-10 text-sm font-bold text-slate-700">
+                    <li><i class="fas fa-check text-green-500 mr-2"></i> Verified B2B/B2C Sellers</li>
+                    <li><i class="fas fa-check text-green-500 mr-2"></i> Multi-Currency Checkout</li>
+                </ul>
+                <a href="emarket.html" class="text-swiftBlue font-black text-sm uppercase tracking-widest hover:text-swiftOrange transition-colors">Enter Market →</a>
+            </div>
+
+            <!-- Logistics Card -->
+            <div id="logistics" class="service-card bg-deepNavy p-10 rounded-[2.5rem] shadow-2xl text-white relative overflow-hidden">
+                <div class="absolute top-0 right-0 p-8 opacity-10" aria-hidden="true">
+                    <i class="fas fa-truck-fast text-[120px]"></i>
+                </div>
+                <div class="service-icon w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mb-8 relative z-10">
+                    <i class="fas fa-route text-swiftOrange text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-black mb-4 relative z-10">Smart Logistics</h3>
+                <p class="text-slate-300 text-sm leading-relaxed mb-8 relative z-10">
+                    Real-time AI-driven delivery routing. Track your assets across air, sea, and land with 1-meter GPS precision.
+                </p>
+                <ul class="space-y-3 mb-10 text-sm font-bold text-slate-100 relative z-10">
+                    <li><i class="fas fa-check text-swiftOrange mr-2"></i> Real-Time GPS Tracking</li>
+                    <li><i class="fas fa-check text-swiftOrange mr-2"></i> Automated Fleet Dispatch</li>
+                </ul>
+                <a href="#logistics-details" class="text-white font-black text-sm uppercase tracking-widest hover:text-swiftOrange transition-colors relative z-10 inline-block">Track Shipments →</a>
+            </div>
+
+            <!-- Advertising Card -->
+            <div id="advertising" class="service-card bg-white p-10 rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-slate-100">
+                <div class="service-icon w-16 h-16 bg-orange-50 rounded-2xl flex items-center justify-center mb-8">
+                    <i class="fas fa-ad text-swiftOrange text-3xl"></i>
+                </div>
+                <h3 class="text-2xl font-black text-deepNavy mb-4">Ad Solutions</h3>
+                <p class="text-slate-500 text-sm leading-relaxed mb-8">
+                    Place your brand exactly where decisions are made. Our engine targets high-intent buyers within the D-TAP ecosystem.
+                </p>
+                <ul class="space-y-3 mb-10 text-sm font-bold text-slate-700">
+                    <li><i class="fas fa-check text-green-500 mr-2"></i> Sponsored Search Results</li>
+                    <li><i class="fas fa-check text-green-500 mr-2"></i> Video-First Ad Formats</li>
+                </ul>
+                <a href="#advertising-details" class="text-swiftOrange font-black text-sm uppercase tracking-widest hover:text-swiftBlue transition-colors">Grow Revenue →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-swiftBlue py-20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col lg:flex-row items-center justify-between relative z-10">
+            <div class="text-white mb-10 lg:mb-0">
+                <h2 class="text-4xl font-black mb-4">READY TO SCALE YOUR BUSINESS?</h2>
+                <p class="text-blue-100 text-lg opacity-80">Join 50,000+ businesses already operating on D-TAP.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                <button class="bg-white text-swiftBlue px-10 py-4 rounded-xl font-black hover:bg-swiftOrange hover:text-white transition-colors shadow-xl focus:outline-none focus:ring-2 focus:ring-white">
+                    Contact Sales
+                </button>
+                <button class="border-2 border-white/30 text-white px-10 py-4 rounded-xl font-black hover:bg-white/10 transition-colors focus:outline-none focus:ring-2 focus:ring-white">
+                    Partner Inquiry
+                </button>
+            </div>
+        </div>
+        <div class="absolute top-0 right-0 w-96 h-96 bg-white/5 rounded-full -translate-y-1/2 translate-x-1/3" aria-hidden="true"></div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-white pt-24 pb-12 border-t">
+        <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 lg:grid-cols-5 gap-12 mb-20">
+            <div class="col-span-2">
+                <span class="text-3xl font-black text-swiftBlue tracking-tighter block mb-6">D-TAP</span>
+                <p class="text-slate-500 text-sm leading-relaxed max-w-sm mb-6">
+                    Redefining the speed of trade through unified digital infrastructure. D-TAP is the engine behind the next generation of global commerce.
+                </p>
+                <nav class="flex space-x-4 text-slate-400" aria-label="Social mxedia">
+                    <a href="https://www.linkedin.com/in/david-sockity" class="hover:text-swiftBlue transition-colors text-xl" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                    <a href="https://twitter.com/davidsockity" class="hover:text-swiftBlue transition-colors text-xl" aria-label="Twitter"><i class="fab fa-twitter-square"></i></a>
+                    <a href="https://instagram.com/davidsockity" class="hover:text-swiftBlue transition-colors text-xl" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </nav>
+            </div>
+            <div>
+                <h3 class="font-black text-deepNavy text-xs uppercase tracking-widest mb-6">Ecosystem</h3>
+                <ul class="text-sm text-slate-500 space-y-3">
+                    <li><a href="#marketplace" class="hover:text-swiftBlue transition-colors">Marketplace</a></li>
+                    <li><a href="#fleet" class="hover:text-swiftBlue transition-colors">Fleet Management</a></li>
+                    <li><a href="#ads" class="hover:text-swiftBlue transition-colors">Ad Manager</a></li>
+                    <li><a href="#docs" class="hover:text-swiftBlue transition-colors">Developer Docs</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-black text-deepNavy text-xs uppercase tracking-widest mb-6">Company</h3>
+                <ul class="text-sm text-slate-500 space-y-3">
+                    <li><a href="#about" class="hover:text-swiftBlue transition-colors">About Us</a></li>
+                    <li><a href="#network" class="hover:text-swiftBlue transition-colors">Global Network</a></li>
+                    <li><a href="#careers" class="hover:text-swiftBlue transition-colors">Careers</a></li>
+                    <li><a href="#privacy" class="hover:text-swiftBlue transition-colors">Privacy</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3 class="font-black text-deepNavy text-xs uppercase tracking-widest mb-6">Security</h3>
+                <ul class="text-sm text-slate-500 space-y-3">
+                    <li><a href="#data-privacy" class="hover:text-swiftBlue transition-colors">Data Privacy</a></li>
+                    <li><a href="#ethics" class="hover:text-swiftBlue transition-colors">Vendor Ethics</a></li>
+                    <li><a href="#certifications" class="hover:text-swiftBlue transition-colors">Certifications</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-t pt-8 text-[10px] font-bold text-slate-400 uppercase tracking-widest">
+            <span>&copy; 2026 D-TAP International Group. All rights reserved.</span>
+            <nav class="flex space-x-6">
+                <a href="#terms" class="hover:text-slate-600 transition-colors">Terms of Trade</a>
+                <a href="#cookies" class="hover:text-slate-600 transition-colors">Cookie Policy</a>
+            </nav>
+        </div>
+    </footer>
+
+</body>
+</html>

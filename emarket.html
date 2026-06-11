@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-TAP | Professional Business Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        swiftBlue: '#004aad',
+                        swiftOrange: '#ff6600',
+                        businessGray: '#f4f7f9'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .product-card:hover .quick-view { opacity: 1; transform: translateY(0); }
+        .filter-transition { transition: all 0.3s ease-in-out; }
+    </style>
+</head>
+<body class="bg-businessGray">
+
+    <div class="bg-swiftBlue text-white text-xs py-2 px-4 flex justify-between items-center">
+        <div class="flex items-center space-x-4">
+            <span><i class="fas fa-bullhorn mr-2 text-swiftOrange"></i> <b>PROMOTION:</b> Featured vendors get 15% lower transaction fees this month!</span>
+        </div>
+        <div class="flex space-x-4">
+            <a href="#" class="hover:text-swiftOrange">Sell on D-TAP</a>
+            <a href="#" class="hover:text-swiftOrange">Enterprise Solutions</a>
+            <a href="#" class="hover:text-swiftOrange">Help Center</a>
+        </div>
+    </div>
+
+    <nav class="bg-white border-b sticky top-0 z-50">
+        <div class="max-w-[1400px] mx-auto px-6 flex items-center justify-between h-20">
+            <div class="flex items-center space-x-3">
+                <img src="D-TAP.png" alt="D-TAP logo" class="h-12 w-auto rounded-lg shadow-sm">
+                <a href="home.html">
+                    <span class="text-2xl font-black text-swiftBlue tracking-tighter" style="transition: cubic-bezier(0.47, 0, 0.745, 0.715);">D-TAP</span>
+                </a>
+            </div>
+
+            <div class="flex-1 max-w-2xl mx-10">
+                <div class="relative flex">
+                    <select class="bg-gray-100 border-r border-gray-300 rounded-l-lg px-4 text-sm font-semibold focus:outline-none">
+                        <option>All Categories</option>
+                        <option>Electronics</option>
+                        <option>Office Supply</option>
+                        <option>Industrial</option>
+                    </select>
+                    <input type="text" placeholder="Search for products, vendors, or SKU..." class="w-full bg-gray-100 p-3 outline-none text-sm">
+                    <button class="bg-swiftBlue text-white px-6 rounded-r-lg hover:bg-blue-900 transition">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="flex items-center space-x-6 text-swiftBlue font-semibold">
+                <div class="relative cursor-pointer group">
+                    <i class="fas fa-chart-line text-xl"></i>
+                    <span class="absolute -top-2 -right-2 bg-swiftOrange text-white text-[10px] px-1.5 rounded-full">Pro</span>
+                    <span class="hidden group-hover:block absolute top-8 right-0 bg-white border shadow-xl p-3 w-48 text-xs rounded text-gray-600">Market Trends & Analytics</span>
+                </div>
+                <div class="relative cursor-pointer">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-swiftBlue text-white text-[10px] px-1.5 rounded-full">0</span>
+                </div>
+             <a href="Password.html" class="bg-swiftBlue text-white px-5 py-2 rounded-lg hover:bg-blue-900 transition">Join Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-[1400px] mx-auto px-6 py-8 flex">
+        
+        <aside class="w-72 pr-8 hidden lg:block">
+            <h3 class="font-black text-swiftBlue uppercase tracking-widest text-sm mb-6">Market Filters</h3>
+            
+            <div class="mb-8">
+                <p class="font-bold text-gray-700 mb-4 flex justify-between items-center">
+                    Categories <i class="fas fa-chevron-down text-xs"></i>
+                </p>
+                <div class="space-y-2 text-sm text-gray-600">
+                    <label class="flex items-center space-x-2 cursor-pointer hover:text-swiftOrange">
+                        <input type="checkbox" class="accent-swiftOrange"> <span>Office Electronics</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:text-swiftOrange">
+                        <input type="checkbox" class="accent-swiftOrange"> <span>Industrial Tools</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:text-swiftOrange">
+                        <input type="checkbox" class="accent-swiftOrange"> <span>Software Licenses</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer hover:text-swiftOrange">
+                        <input type="checkbox" class="accent-swiftOrange"> <span>Logistics Equipment</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <p class="font-bold text-gray-700 mb-4">Price Range (USD)</p>
+                <input type="range" class="w-full accent-swiftBlue" min="0" max="5000">
+                <div class="flex justify-between text-xs font-bold text-gray-500 mt-2">
+                    <span>$0</span>
+                    <span>$5,000+</span>
+                </div>
+            </div>
+
+            <div class="mb-8">
+                <p class="font-bold text-gray-700 mb-4">Vendor Verification</p>
+                <div class="space-y-3">
+                    <div class="flex items-center p-2 rounded bg-blue-50 border border-blue-100">
+                        <i class="fas fa-shield-check text-swiftBlue mr-2"></i>
+                        <span class="text-xs font-bold text-swiftBlue">Verified Business Only</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-br from-swiftOrange to-red-600 p-6 rounded-2xl text-white shadow-lg">
+                <p class="text-xs font-bold opacity-80 uppercase mb-2">Partner Spotlight</p>
+                <h4 class="font-black text-xl mb-4 leading-tight">Ship Smarter with SwiftLogistics</h4>
+                <button class="bg-white text-swiftOrange text-xs font-bold px-4 py-2 rounded shadow-md">Learn More</button>
+            </div>
+        </aside>
+
+        <main class="flex-1">
+            <div class="bg-white p-4 rounded-xl shadow-sm border mb-8 flex justify-between items-center">
+                <div class="text-sm">
+                    Showing <span class="font-bold">1,240</span> results for <span class="text-swiftOrange font-bold">"Enterprise Solutions"</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="text-sm text-gray-500 font-semibold">Sort By:</span>
+                    <select class="text-sm font-bold bg-transparent outline-none border-b-2 border-swiftBlue pb-1">
+                        <option>Most Relevant</option>
+                        <option>Highest Rating</option>
+                        <option>Price: Low to High</option>
+                        <option>Newest Arrivals</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+                
+                <div class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative transition hover:shadow-xl group">
+                    <div class="absolute top-4 left-4 z-10 space-y-2">
+                        <span class="bg-swiftOrange text-white text-[10px] font-black px-2 py-1 rounded block uppercase">Sponsored</span>
+                        <span class="bg-green-500 text-white text-[10px] font-black px-2 py-1 rounded block uppercase">Verified Vendor</span>
+                    </div>
+                    <div class="h-64 bg-gray-100 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?q=80&w=800" class="object-cover w-full h-full group-hover:scale-110 transition duration-500">
+                        <div class="quick-view absolute inset-0 bg-swiftBlue/40 flex items-center justify-center opacity-0 transition-all translate-y-4">
+                            <button class="bg-white text-swiftBlue font-bold px-6 py-2 rounded-full shadow-lg hover:bg-swiftOrange hover:text-white transition">Quick View</button>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-lg text-swiftBlue leading-tight">Quantum X1 Enterprise Laptop</h3>
+                            <span class="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-1 rounded">SKU: 992-X</span>
+                        </div>
+                        <div class="flex items-center text-yellow-500 text-xs mb-4">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i>
+                            <span class="text-gray-400 ml-2">(48 Reviews)</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mb-6 line-clamp-2">High-performance machine optimized for heavy data processing and professional multi-tasking.</p>
+                        <div class="flex justify-between items-center border-t pt-4">
+                            <div>
+                                <span class="text-sm text-gray-400 line-through block">$1,499</span>
+                                <span class="text-2xl font-black text-swiftBlue">$1,299.00</span>
+                            </div>
+                            <button onclick="addToCart()" class="bg-swiftOrange text-white p-4 rounded-xl hover:bg-swiftBlue transition">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative transition hover:shadow-xl group">
+                    <div class="h-64 bg-gray-100 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1542744094-3a31f272c490?q=80&w=800" class="object-cover w-full h-full group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-lg text-swiftBlue leading-tight">Global Logistics Software (1yr)</h3>
+                            <span class="bg-blue-100 text-swiftBlue text-[10px] font-bold px-2 py-1 rounded">Digital License</span>
+                        </div>
+                        <p class="text-xs text-gray-500 mb-6">Automate your entire shipping route and fleet management with AI optimization.</p>
+                        <div class="flex justify-between items-center border-t pt-4">
+                            <div>
+                                <span class="text-2xl font-black text-swiftBlue">$450.00</span>
+                                <span class="text-[10px] text-gray-400 block font-bold uppercase">Tax Excl.</span>
+                            </div>
+                            <button onclick="addToCart()" class="bg-swiftBlue text-white px-4 py-2 rounded-lg font-bold text-sm hover:bg-swiftOrange transition">Buy License</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="product-card bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden relative transition hover:shadow-xl group">
+                    <div class="absolute top-4 left-4 z-10">
+                        <span class="bg-swiftBlue text-white text-[10px] font-black px-2 py-1 rounded block uppercase">In Stock</span>
+                    </div>
+                    <div class="h-64 bg-gray-100 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1491933382434-500287f9b54b?q=80&w=800" class="object-cover w-full h-full group-hover:scale-110 transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-lg text-swiftBlue leading-tight">A3 Professional Smart Printer</h3>
+                            <span class="bg-gray-100 text-gray-600 text-[10px] font-bold px-2 py-1 rounded">New</span>
+                        </div>
+                        <div class="flex items-center text-yellow-500 text-xs mb-4">
+                            <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star text-gray-300"></i>
+                            <span class="text-gray-400 ml-2">(12 Reviews)</span>
+                        </div>
+                        <div class="flex justify-between items-center border-t pt-4">
+                            <span class="text-2xl font-black text-swiftBlue">$899.00</span>
+                            <button onclick="addToCart()" class="bg-swiftOrange text-white p-4 rounded-xl hover:bg-swiftBlue transition">
+                                <i class="fas fa-cart-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+
+            <div class="mt-12 flex justify-center items-center space-x-2">
+                <button class="w-10 h-10 border-2 rounded-lg hover:border-swiftBlue flex items-center justify-center transition"><i class="fas fa-chevron-left"></i></button>
+                <button class="w-10 h-10 bg-swiftBlue text-white rounded-lg font-bold">1</button>
+                <button class="w-10 h-10 border-2 rounded-lg hover:border-swiftBlue font-bold transition">2</button>
+                <button class="w-10 h-10 border-2 rounded-lg hover:border-swiftBlue font-bold transition">3</button>
+                <span class="px-2">...</span>
+                <button class="w-10 h-10 border-2 rounded-lg hover:border-swiftBlue font-bold transition">12</button>
+                <button class="w-10 h-10 border-2 rounded-lg hover:border-swiftBlue flex items-center justify-center transition"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </main>
+    </div>
+
+    <footer class="bg-white border-t mt-20 pt-16 pb-8">
+        <div class="max-w-[1400px] mx-auto px-6 grid grid-cols-1 md:grid-cols-4 gap-12 border-b pb-12">
+            <div class="col-span-1">
+                <span class="text-3xl font-black text-swiftBlue tracking-tighter block mb-4">D-TAP</span>
+                <p class="text-sm text-gray-500 mb-6">The definitive business ecosystem for modern trade, logistics, and digital marketing across global markets.</p>
+                <div class="flex space-x-4">
+                    <i class="fab fa-linkedin text-xl text-swiftBlue hover:text-swiftOrange cursor-pointer"></i>
+                    <i class="fab fa-twitter text-xl text-swiftBlue hover:text-swiftOrange cursor-pointer"></i>
+                    <i class="fab fa-facebook text-xl text-swiftBlue hover:text-swiftOrange cursor-pointer"></i>
+                </div>
+            </div>
+            <div>
+                <h4 class="font-bold text-swiftBlue mb-4 uppercase tracking-widest text-xs">For Buyers</h4>
+                <ul class="text-sm text-gray-600 space-y-2">
+                    <li><a href="#" class="hover:text-swiftOrange">Wholesale Inquiry</a></li>
+                    <li><a href="#" class="hover:text-swiftOrange">Order Tracking</a></li>
+                    <li><a href="#" class="hover:text-swiftOrange">Purchase Protection</a></li>
+                    <li><a href="#" class="hover:text-swiftOrange">D-TAP Rewards</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold text-swiftBlue mb-4 uppercase tracking-widest text-xs">For Vendors</h4>
+                <ul class="text-sm text-gray-600 space-y-2">
+                    <li><a href="#" class="hover:text-swiftOrange">Sell Goods</a></li>
+                    <li><a href="#" class="hover:text-swiftOrange">Advertising Packages</a></li>
+                    <li><a href="#" class="hover:text-swiftOrange">Merchant Guidelines</a></li>
+                    <li><a href="#" class="hover:text-swiftOrange">API Access</a></li>
+                </ul>
+            </div>
+            <div class="bg-swiftBlue p-6 rounded-2xl text-white">
+                <h4 class="font-bold mb-2">Subscribe to Insights</h4>
+                <p class="text-xs text-blue-100 mb-4">Get weekly reports on market trends and trending niches.</p>
+                <div class="flex">
+                    <input type="email" placeholder="Email Address" class="bg-white/10 text-xs p-2 rounded-l w-full outline-none">
+                    <button class="bg-swiftOrange px-4 rounded-r text-xs font-bold uppercase">Join</button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-[1400px] mx-auto px-6 py-8 flex justify-between items-center text-xs text-gray-400 font-semibold">
+            <div>&copy; 2026 D-TAP Corporate. All rights reserved.</div>
+            <div class="flex space-x-6 uppercase tracking-widest">
+                <a href="#">Security</a>
+                <a href="#">Terms</a>
+                <a href="#">Privacy</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        let cartItems = 0;
+        function addToCart() {
+            cartItems++;
+            const badge = document.getElementById('cart-count');
+            badge.innerText = cartItems;
+            badge.classList.add('scale-125', 'bg-swiftOrange');
+            setTimeout(() => {
+                badge.classList.remove('scale-125');
+            }, 200);
+            
+            // Professional notification
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-5 right-5 bg-swiftBlue text-white px-6 py-4 rounded-xl shadow-2xl z-[100] animate-bounce font-bold";
+            toast.innerText = "✓ Item added to your corporate basket.";
+            document.body.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+    </script>
+</body>
+</html>
+

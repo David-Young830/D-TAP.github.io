@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D-TAP | Integrated Business Ecosystem</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        swiftBlue: '#004aad',
+                        swiftOrange: '#ff6600',
+                        swiftDark: '#0f172a',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .active-link { color: #ff6600 !important; font-weight: 800; border-right: 4px solid #ff6600; }
+        .tab-panel { display: none; animation: slideUp 0.3s ease-out; }
+        .tab-panel.active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .modal { display: none; background: rgba(15, 23, 42, 0.8); }
+        .modal.active { display: flex; }
+    </style>
+</head>
+<body class="bg-slate-50 font-sans antialiased">
+
+    <div id="toast" class="fixed bottom-10 left-1/2 -translate-x-1/2 bg-swiftDark text-white px-8 py-3 rounded-full shadow-2xl z-[100] hidden">
+        <span id="toast-msg">Action Successful</span>
+    </div>
+
+    <div id="loginModal" class="modal fixed inset-0 z-[100] items-center justify-center p-4">
+        <div class="bg-white rounded-4xl p-10 max-w-md w-full shadow-2xl relative">
+            <button onclick="toggleModal('loginModal')" class="absolute top-6 right-6 text-gray-400 hover:text-gray-600"><i class="fas fa-times text-xll"></i></button>
+            <a href="home.html" class="text-2xl font-bold text-swiftBlue mb-2">D-TAP</a>
+            <a href="Password.html" class="text-sm text-blue-400 mb-8 block">Click here to log in</a>
+        </div>
+    </div>
+
+    <aside class="fixed left-0 top-0 h-screen w-64 bg-swiftDark text-white z-50 hidden lg:flex flex-col">
+        <div class="p-8">
+            <div class="flex items-center gap-3 cursor-pointer" onclick="showPanel('market')">
+                <img src="D-TAP.png" alt="D-TAP logo" class="h-10 w-auto rounded-lg shadow-lg">
+                <span class="text-2xl font-bold tracking-tight">D-TAP</span>
+            </div>
+            <p class=\"text-xs text-gray-400 mt-1\">Business Ecosystem</p>
+        </div>
+        <nav class="flex-1 px-4 space-y-1">
+            <button onclick="showPanel('market', this)" class="nav-btn active-link flex items-center space-x-4 w-full p-3 rounded-lg hover:bg-slate-800 transition">
+                <i class="fas fa-store w-5"></i> <span>E-Market</span>
+            </button>
+            <button onclick="showPanel('logistics', this)" class="nav-btn flex items-center space-x-4 w-full p-3 rounded-lg hover:bg-slate-800 transition">
+                <i class="fas fa-truck-fast w-5"></i> <span>Logistics</span>
+            </button>
+            <button onclick="showPanel('ads', this)" class="nav-btn flex items-center space-x-4 w-full p-3 rounded-lg hover:bg-slate-800 transition">
+                <i class="fas fa-megaphone w-5"></i> <span>Marketing</span>
+            </button>
+            <button onclick="showPanel('leadership', this)" class="nav-btn flex items-center space-x-4 w-full p-3 rounded-lg hover:bg-slate-800 transition">
+                <i class="fas fa-user w-5"></i> <span>Leadership</span>
+            </button>
+            <div class="pt-6 border-t border-slate-700 mt-6">
+                <p class="text-xs uppercase font-bold text-slate-400 mb-4 px-4">Finance</p>
+                <button onclick="showPanel('financials', this)" class="nav-btn flex items-center space-x-4 w-full p-3 rounded-lg hover:bg-slate-800 transition">
+                    <i class="fas fa-chart-line w-5"></i> <span>Financials</span>
+                </button>
+            </div>
+        </nav>
+        <div class="p-4 bg-slate-900 m-4 rounded-lg">
+            <p class="text-xs text-gray-400 mb-2">Logged in as</p> 
+            <p class="font-bold text-sm">David Sockity</p>
+            <p class="text-xs text-swiftOrange font-bold">CEO & FOUNDER</p>
+        </div>
+    </aside>
+
+    <main class="lg:ml-64 min-h-screen">
+        
+        <header class="bg-white border-b py-4 px-8 flex justify-between items-center sticky top-0 z-40">
+            <h2 id="header-title" class="text-lg font-bold text-swiftBlue">E-Market Explorer</h2>
+            <div class="flex items-center space-x-6">
+                <div class="relative cursor-pointer" onclick="showToast('No new notifications')">
+                    <i class="fas fa-bell text-gray-400 text-lg"></i>
+                    <span class="absolute -top-1 -right-1 bg-swiftOrange text-white text-[10px] rounded-full px-1">0</span>
+                </div>
+                <div class="flex items-center space-x-2 bg-slate-100 px-4 py-2 rounded-full cursor-pointer" onclick="showToast('Cart is currently empty')">
+                    <i class="fas fa-shopping-cart text-swiftBlue"></i>
+                    <span id="cart-count" class="font-bold text-swiftBlue">0</span>
+                </div>
+                <div id="auth-buttons" class="flex items-center space-x-3">
+                    <button id="loginBtn" onclick="toggleModal('loginModal')" class="bg-swiftBlue text-white px-6 py-2 rounded-lg font-bold text-sm hover:shadow-lg transition">Login</button>
+                    <button id="logoutBtn" onclick="mockLogout()" class="bg-red-500 text-white px-6 py-2 rounded-lg font-bold text-sm hover:shadow-lg transition hidden">Logout</button>
+                </div>
+            </div>
+        </header>
+
+        <div id="market" class="tab-panel active p-8">
+            <div class="bg-gradient-to-r from-swiftBlue to-blue-900 rounded-3xl p-10 text-white mb-10 shadow-2xl relative overflow-hidden">
+                <div class="relative z-10">
+                    <h3 class="text-5xl font-bold mb-4 leading-tight">Global Commerce <span class="text-swiftOrange">Simplified</span></h3>
+                    <p class="max-w-xl opacity-90 mb-8 text-lg">Enterprise-grade vendor management and integrated solutions to scale your business globally.</p>
+                    <div class="flex space-x-4">
+                        <button onclick="showPanel('ads')" class="bg-white text-swiftBlue px-8 py-3 rounded-lg font-bold hover:shadow-lg transition">Marketing Solutions</button>
+                        <button onclick="showPanel('logistics')" class="bg-swiftOrange text-white px-8 py-3 rounded-lg font-bold hover:shadow-lg transition">Shipping & Logistics</button>
+                        <a href="emarket.html" class="bg-blue-500 border-2 border-white text-white px-8 py-3 rounded-lg font-bold hover:bg-white hover:text-swiftBlue transition">Explore E-Market</a>
+                    </div>
+                </div>
+                <i class="fas fa-globe absolute right-[-50px] bottom-[-50px] text-[300px] opacity-10"></i>
+            </div>
+
+            <section id="market" class="tab-panel active p-8">
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-10 gap-4">
+        <div>
+            <h3 class="text-4xl font-black text-swiftBlue">GLOBAL INVENTORY</h3>
+            <p class="text-gray-500">Verified products ready for immediate dispatch.</p>
+        </div>
+        <div class="flex bg-white p-2 rounded-lg shadow-sm border border-slate-100">
+            <button onclick="filterMarket('all')" class="px-6 py-2 rounded-md font-bold text-sm bg-swiftBlue text-white transition">All</button>
+            <button onclick="filterMarket('agri')" class="px-6 py-2 rounded-md font-bold text-sm text-gray-500 hover:text-swiftBlue transition">Agriculture</button>
+            <button onclick="filterMarket('tech')" class="px-6 py-2 rounded-md font-bold text-sm text-gray-500 hover:text-swiftBlue transition">Technology</button>
+            <button onclick="filterMarket('marketing')" class="px-6 py-2 rounded-md font-bold text-sm text-gray-500 hover:text-swiftBlue transition">Marketing</button>
+        </div>
+    </div>
+
+    <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        </div>
+</section>
+
+<script>
+    // Product Data Array - 50 Verified Products
+    const swiftProducts = [
+        { id: 1, name: "Swift-Grow Organic Seeds", category: "agri", price: 45.00, vendor: "AgroDirect Farms", img: "https://images.unsplash.com/photo-1523348837708-15d4a09cfac2?w=500", stock: 15, isSponsored: true },
+        { id: 2, name: "Prime View Video Rig", category: "marketing", price: 890.00, vendor: "Prime Life Enterprise", img: "https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=500", stock: 8, isSponsored: false },
+        { id: 3, name: "Precision Ledger Laptop", category: "tech", price: 1200.00, vendor: "TechNova Solutions", img: "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=500", stock: 5, isSponsored: true },
+        { id: 4, name: "Solar Powered Water Pump", category: "agri", price: 350.00, vendor: "D-TAP Logistics", img: "https://images.unsplash.com/photo-1558449028-b53a39d100fc?w=500", stock: 8, isSponsored: false },
+        { id: 5, name: "Pro-Marketing Light Kit", category: "marketing", price: 120.00, vendor: "Prime Life Enterprise", img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500", stock: 25, isSponsored: true },
+        { id: 6, name: "QuickBooks Pro  Tablet", category: "tech", price: 450.00, vendor: "Solvo Global Tech", img: "https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?w=500", stock: 12, isSponsored: false },
+        { id: 7, name: "D-TAP Running Shoes", category: "retail", price: 95.00, vendor: "D-TAP Retail", img: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500", stock: 40, isSponsored: false },
+        { id: 8, name: "Automated Irrigation Valve", category: "agri", price: 75.00, vendor: "AgroDirect Farms", img: "https://images.unsplash.com/photo-1589923188900-85dae523342b?w=500", stock: 22, isSponsored: false },
+        { id: 9, name: "Premium Drone Camera", category: "tech", price: 2500.00, vendor: "AeroTech Industries", img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500", stock: 3, isSponsored: true },
+        { id: 10, name: "Ultra HD Projector", category: "electronics", price: 1800.00, vendor: "VisuaLight Corp", img: "https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=500", stock: 6, isSponsored: false },
+        { id: 11, name: "Smart Farming Sensors", category: "agri", price: 280.00, vendor: "AgriTech Solutions", img: "https://images.unsplash.com/photo-1581578731548-c64695c952952?w=500", stock: 18, isSponsored: true },
+        { id: 12, name: "Professional Microphone Set", category: "marketing", price: 450.00, vendor: "SoundCraft Pro", img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500", stock: 14, isSponsored: false },
+        { id: 13, name: "Wireless Earbuds Pro", category: "electronics", price: 180.00, vendor: "AudioMax Tech", img: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500", stock: 35, isSponsored: true },
+        { id: 14, name: "4K Action Camera", category: "electronics", price: 350.00, vendor: "CameraFirst Inc", img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500", stock: 11, isSponsored: false },
+        { id: 15, name: "Organic Fertilizer (50kg)", category: "agri", price: 120.00, vendor: "EcoGrow Farms", img: "https://images.unsplash.com/photo-1574248715282-1e13be0dbbda?w=500", stock: 45, isSponsored: false },
+        { id: 16, name: "LED Ring Light Studio", category: "marketing", price: 85.00, vendor: "StudioLight Solutions", img: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500", stock: 28, isSponsored: true },
+        { id: 17, name: "Portable Power Bank", category: "electronics", price: 45.00, vendor: "PowerTech Global", img: "https://images.unsplash.com/photo-1609091839311-d5365f9ff1c5?w=500", stock: 60, isSponsored: false },
+        { id: 18, name: "Digital Marketing Course", category: "marketing", price: 299.00, vendor: "D-TAP Academy", img: "https://images.unsplash.com/photo-1516534775068-bb57ce5b9b09?w=500", stock: 100, isSponsored: true },
+        { id: 19, name: "Greenhouse Kit (20x30)", category: "agri", price: 850.00, vendor: "SustainFarm Ltd", img: "https://images.unsplash.com/photo-1584831957039-ad8f235ad38d?w=500", stock: 4, isSponsored: false },
+        { id: 20, name: "Bluetooth Speaker", category: "electronics", price: 65.00, vendor: "SoundWave Corp", img: "https://images.unsplash.com/photo-1537438214619-69d2ece6bd88?w=500", stock: 42, isSponsored: false },
+        { id: 21, name: "Fiber Optic Cable (500m)", category: "tech", price: 550.00, vendor: "ConnectNet Pro", img: "https://images.unsplash.com/photo-1531492746076-161ca9bcad58?w=500", stock: 9, isSponsored: true },
+        { id: 22, name: "Premium Office Chair", category: "retail", price: 320.00, vendor: "ComfortSeating Co", img: "https://images.unsplash.com/photo-1592078615290-033ee584e267?w=500", stock: 16, isSponsored: false },
+        { id: 23, name: "Standing Desk Converter", category: "retail", price: 180.00, vendor: "ErgoWorks Inc", img: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500", stock: 24, isSponsored: true },
+        { id: 24, name: "VR Headset Pro", category: "electronics", price: 899.00, vendor: "VirtualWorld Tech", img: "https://images.unsplash.com/photo-1638909615263-d71dcf04593b?w=500", stock: 7, isSponsored: false },
+        { id: 25, name: "Webcam HD 1080p", category: "marketing", price: 95.00, vendor: "CameraTech Pro", img: "https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=500", stock: 33, isSponsored: true },
+        { id: 26, name: "Laptop Stand Aluminum", category: "retail", price: 55.00, vendor: "TechSupport Design", img: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=500", stock: 52, isSponsored: false },
+        { id: 27, name: "USB Hub 7 Port", category: "tech", price: 45.00, vendor: "ConnectHub Pro", img: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=500", stock: 38, isSponsored: false },
+        { id: 28, name: "Mechanical Keyboard RGB", category: "electronics", price: 120.00, vendor: "KeyMaster Tech", img: "https://images.unsplash.com/photo-1587829191301-7b5a47848b0a?w=500", stock: 19, isSponsored: true },
+        { id: 29, name: "Wireless Mouse Pro", category: "electronics", price: 55.00, vendor: "PointerTech Inc", img: "https://images.unsplash.com/photo-1527814050087-3793815479db?w=500", stock: 48, isSponsored: false },
+        { id: 30, name: "Crop Protection Spray", category: "agri", price: 30.00, vendor: "SafeHarvest Corp", img: "https://images.unsplash.com/photo-1574248715282-1e13be0dbbda?w=500", stock: 56, isSponsored: false },
+        { id: 31, name: "Portable Projector 4K", category: "electronics", price: 800.00, vendor: "MobiScreen Tech", img: "https://images.unsplash.com/photo-1493857671505-72967e2e2760?w=500", stock: 5, isSponsored: true },
+        { id: 32, name: "Digital Scale Precision", category: "electronics", price: 75.00, vendor: "MeasureTech Pro", img: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=500", stock: 29, isSponsored: false },
+        { id: 33, name: "Smartphone Stand", category: "retail", price: 25.00, vendor: "MobileSupport Ltd", img: "https://images.unsplash.com/photo-1605559424843-9e4c3dec1305?w=500", stock: 84, isSponsored: false },
+        { id: 34, name: "Thermal Camera Imaging", category: "tech", price: 2200.00, vendor: "ThermoVision Corp", img: "https://images.unsplash.com/photo-1614008375890-cb53b6c5f8d5?w=500", stock: 2, isSponsored: true },
+        { id: 35, name: "Pressure Washer Electric", category: "retail", price: 280.00, vendor: "CleanPower Industries", img: "https://images.unsplash.com/photo-1585622550473-8b47dcb73f63?w=500", stock: 10, isSponsored: false },
+        { id: 36, name: "Document Scanner Pro", category: "tech", price: 450.00, vendor: "ScanTech Solutions", img: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500", stock: 13, isSponsored: false },
+        { id: 37, name: "Laminator Machine A3", category: "retail", price: 120.00, vendor: "OfficeMax Solutions", img: "https://images.unsplash.com/photo-1595521622439-a0b16a0f3fa0?w=500", stock: 20, isSponsored: true },
+        { id: 38, name: "Portable Hard Drive 2TB", category: "electronics", price: 110.00, vendor: "DataSecure Corp", img: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=500", stock: 31, isSponsored: false },
+        { id: 39, name: "Security Camera System", category: "tech", price: 580.00, vendor: "SafeWatch Pro", img: "https://images.unsplash.com/photo-1622170354539-0fcb2e75b5ad?w=500", stock: 8, isSponsored: true },
+        { id: 40, name: "Garden Tool Set 12pc", category: "agri", price: 85.00, vendor: "GardenMasters Ltd", img: "https://images.unsplash.com/photo-1591565949559-dd22ef5dce22?w=500", stock: 27, isSponsored: false },
+        { id: 41, name: "Electric Drill Cordless", category: "retail", price: 150.00, vendor: "PowerTools Pro", img: "https://images.unsplash.com/photo-1565043666747-69f6646db940?w=500", stock: 17, isSponsored: false },
+        { id: 42, name: "LED Desk Lamp Smart", category: "electronics", price: 65.00, vendor: "LightSmart Inc", img: "https://images.unsplash.com/photo-1565636192335-14f2e7a76efb?w=500", stock: 39, isSponsored: true },
+        { id: 43, name: "Coffee Maker Pro", category: "retail", price: 95.00, vendor: "BrewMaster Corp", img: "https://images.unsplash.com/photo-1517668808822-9ebb02ae2a0e?w=500", stock: 23, isSponsored: false },
+        { id: 44, name: "Air Purifier HEPA", category: "retail", price: 220.00, vendor: "AirClean Tech", img: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?w=500", stock: 11, isSponsored: false },
+        { id: 45, name: "Humidifier Ultrasonic", category: "retail", price: 85.00, vendor: "AirMoist Solutions", img: "https://images.unsplash.com/photo-1599957531212-e93886bb258f?w=500", stock: 34, isSponsored: true },
+        { id: 46, name: "Water Filter System", category: "retail", price: 180.00, vendor: "PureWater Corp", img: "https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=500", stock: 19, isSponsored: false },
+        { id: 47, name: "Smart Home Hub", category: "tech", price: 120.00, vendor: "SmartLiving Inc", img: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=500", stock: 26, isSponsored: true },
+        { id: 48, name: "Surge Protector 8 Outlet", category: "electronics", price: 35.00, vendor: "SafeElectric Ltd", img: "https://images.unsplash.com/photo-1622170354539-0fcb2e75b5ad?w=500", stock: 68, isSponsored: false },
+        { id: 49, name: "Cable Organizer Bundle", category: "retail", price: 28.00, vendor: "OrganiZe Pro", img: "https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?w=500", stock: 76, isSponsored: false },
+        { id: 50, name: "Premium Desk Pad Mouse", category: "retail", price: 45.00, vendor: "OfficeComfort Inc", img: "https://images.unsplash.com/photo-1624394694735-dac3e72120a8?w=500", stock: 41, isSponsored: true }
+    ];
+
+    function renderProducts(products) {
+        const grid = document.getElementById('product-grid');
+        grid.innerHTML = '';
+
+        products.forEach(product => {
+            const isSoldOut = product.stock === 0;
+            const card = `
+                <div class="bg-white rounded-lg shadow-sm border border-slate-200 hover:shadow-md transition-all p-4 group relative ${isSoldOut ? 'opacity-50' : ''}">
+                    <div class="aspect-square bg-slate-100 rounded-md mb-4 overflow-hidden relative">
+                        <img src="${product.img}" class="w-full h-full object-cover group-hover:scale-105 transition duration-300" alt="${product.name}">
+                        ${product.isSponsored ? '<span class="absolute top-2 left-2 bg-swiftOrange text-white text-[10px] font-bold px-2 py-1 rounded">Sponsored</span>' : ''}
+                        ${isSoldOut ? '<div class="absolute inset-0 bg-black/30 flex items-center justify-center"><span class="bg-white text-slate-900 px-3 py-1 rounded font-bold text-xs">Out of Stock</span></div>' : ''}
+                    </div>
+                    <h4 class="font-bold text-sm mb-1 line-clamp-2">${product.name}</h4>
+                    <p class="text-gray-400 text-xs mb-3">By ${product.vendor}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-lg font-bold text-swiftBlue">$${product.price.toFixed(2)}</span>
+                        <button 
+                            onclick="${isSoldOut ? "showToast('Out of stock')" : `updateCart(1); showToast('Added to cart')`}"
+                            class="w-8 h-8 ${isSoldOut ? 'bg-gray-200 cursor-not-allowed' : 'bg-swiftOrange hover:shadow-md'} text-white rounded-md flex items-center justify-center transition text-sm">
+                            <i class="fas ${isSoldOut ? 'fa-ban' : 'fa-plus'}"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
+            grid.innerHTML += card;
+        });
+    }
+
+    function filterMarket(category) {
+        if(category === 'all') {
+            renderProducts(swiftProducts);
+        } else {
+            const filtered = swiftProducts.filter(p => p.category === category);
+            renderProducts(filtered);
+        }
+        
+        // Update button styles
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.classList.remove('bg-swiftBlue', 'text-white');
+            btn.classList.add('text-gray-500');
+        });
+        event.target.classList.add('bg-swiftBlue', 'text-white');
+    }
+
+    // Initial load
+    window.addEventListener('DOMContentLoaded', () => {
+        renderProducts(swiftProducts);
+    });
+</script>
+        </div>
+
+        <div id="logistics" class="tab-panel p-8">
+            <div class="grid lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2 bg-white rounded-2xl shadow-sm p-8 border border-slate-200">
+                    <h3 class="text-2xl font-bold mb-6">Tracking & Delivery</h3>
+                    <div class="flex space-x-3 mb-8">
+                        <input id="trackingInput" type="text" placeholder="Enter tracking ID" class="flex-1 bg-slate-50 border border-slate-300 p-3 rounded-lg outline-none focus:border-swiftBlue focus:ring-1 focus:ring-swiftBlue">
+                        <button onclick="trackOrder()" class="bg-swiftBlue text-white px-6 rounded-lg font-bold hover:shadow-md transition">Track</button>
+                    </div>
+                    <div id="track-result" class="hidden space-y-4">
+                        <div class="flex items-center space-x-4 border-l-3 border-swiftOrange pl-4">
+                            <div class="bg-swiftOrange text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-sm">1</div>
+                            <div>
+                                <p class="font-bold">Dispatched from Warehouse</p>
+                                <p class="text-sm text-gray-500">Driver en route</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-swiftDark rounded-2xl p-6 text-white">
+                    <h4 class="font-bold text-lg mb-4">Logistics Stats</h4>
+                    <div class="space-y-4">
+                        <div class="p-3 bg-slate-800 rounded-lg">
+                            <p class="text-xs text-gray-400 uppercase font-bold">Active Drivers</p>
+                            <p class="text-2xl font-bold">24</p>
+                        </div>
+                        <div class="p-3 bg-slate-800 rounded-lg">
+                            <p class="text-xs text-gray-400 uppercase font-bold">Avg. Delivery Time</p>
+                            <p class="text-2xl font-bold">42 mins</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="ads" class="tab-panel p-8">
+            <div class="max-w-4xl">
+                <h3 class="text-5xl font-black text-swiftBlue mb-6 leading-none">Advanced Marketing</h3>
+                <p class="text-xl text-gray-500 mb-10">Strategic marketing solutions designed to increase engagement and drive measurable business results.</p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div onclick="showToast('Ad Template Selected')" class="bg-white p-8 rounded-3xl shadow-sm border-2 border-transparent hover:border-swiftBlue cursor-pointer transition">
+                        <i class="fas fa-video text-4xl text-swiftOrange mb-6"></i>
+                        <h4 class="font-bold text-xl mb-2">Video Campaign</h4>
+                        <p class="text-gray-500">Engaging visual storytelling for mobile users.</p>
+                    </div>
+                    <div onclick="showToast('Display Ad Selected')" class="bg-white p-8 rounded-3xl shadow-sm border-2 border-transparent hover:border-swiftBlue cursor-pointer transition">
+                        <i class="fas fa-rectangle-ad text-4xl text-swiftBlue mb-6"></i>
+                        <h4 class="font-bold text-xl mb-2">Display Banner</h4>
+                        <p class="text-gray-500">Top-of-search placements for high visibility.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="leadership" class="tab-panel p-8">
+            <div class="bg-white rounded-2xl shadow-sm overflow-hidden border border-slate-200">
+                <div class="bg-gradient-to-r from-swiftBlue to-blue-800 p-8 flex flex-col md:flex-row items-center space-y-6 md:space-y-0 md:space-x-8 text-white">
+                    <div class="w-28 h-28 bg-swiftOrange rounded-full flex items-center justify-center text-4xl font-bold">DS</div>
+                    <div class="text-center md:text-left">
+                        <h3 class="text-3xl font-bold">David Sockity</h3>
+                        <p class="text-blue-100 font-bold text-sm mb-3">Founder & CEO</p>
+                        <div class="flex flex-wrap gap-2 justify-center md:justify-start">
+                            <span class="bg-white/20 px-3 py-1 rounded text-xs backdrop-blur">QuickBooks Certified</span>
+                            <span class="bg-white/20 px-3 py-1 rounded text-xs backdrop-blur">Ramp Specialist</span>
+                            <span class="bg-white/20 px-3 py-1 rounded text-xs backdrop-blur">Bill.com Certified</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-8 grid md:grid-cols-2 gap-10">
+                    <div>
+                        <h4 class="font-bold text-lg mb-4 border-b-2 border-swiftBlue pb-2">Professional Summary</h4>
+                        <p class="text-gray-600 leading-relaxed mb-6">Leading SwiftHub with a commitment to organizational excellence, financial accuracy, and innovative business solutions.</p>
+                        
+                        <h4 class="font-bold text-lg mb-4 border-b-2 border-swiftBlue pb-2">Education</h4>
+                        <ul class="space-y-4">
+                            <li>
+                                <p class="font-bold text-sm">B.S. in Business Management (2026)</p>
+                                <p class="text-xs text-gray-500">BYU Idaho</p>
+                            </li>
+                            <li>
+                                <p class="font-bold text-sm">Associate Degree in Applied Business Management (2025)</p>
+                                <p class="text-xs text-gray-500">BYU Idaho</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-lg mb-4 border-b-2 border-swiftOrange pb-2">Core Expertise</h4>
+                        <div class="flex flex-wrap gap-2 mb-8">
+                            <span class="bg-blue-50 text-swiftBlue px-3 py-1 rounded-full font-bold text-xs">Bank Reconciliations</span>
+                            <span class="bg-blue-50 text-swiftBlue px-3 py-1 rounded-full font-bold text-xs">Transaction Coding</span>
+                            <span class="bg-blue-50 text-swiftBlue px-3 py-1 rounded-full font-bold text-xs">Tax Preparation</span>
+                            <span class="bg-blue-50 text-swiftBlue px-3 py-1 rounded-full font-bold text-xs">Microsoft Excel</span>
+                        </div>
+                        <h4 class="font-bold text-lg mb-4 border-b-2 border-swiftOrange pb-2">Milestones</h4>
+                        <ul class="text-sm text-gray-600 space-y-2">
+                            <li class="flex items-start space-x-2"><i class="fas fa-check text-green-500 mt-0.5"></i> <span>Managed client accounts with precision</span></li>
+                            <li class="flex items-start space-x-2"><i class="fas fa-check text-green-500 mt-0.5"></i> <span>Increased customer engagement effectively</span></li>
+                            <li class="flex items-start space-x-2"><i class="fas fa-check text-green-500 mt-0.5"></i> <span>QuickBooks ProAdvisor Certified (2025)</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="financials" class="tab-panel p-8">
+            <div class="flex justify-between items-end mb-8">
+                <div>
+                    <h3 class="text-3xl font-black">Financial Integrity Hub</h3>
+                    <p class="text-gray-400">Powered by QuickBooks & Ramp Specialists </p>
+                </div>
+                <button onclick="showToast('Reconciling Transactions...')" class="bg-swiftDark text-white px-8 py-3 rounded-xl font-bold italic"><i class="fas fa-sync mr-2"></i> Sync QuickBooks</button>
+            </div>
+            <div class="bg-white p-8 rounded-3xl shadow-sm mb-8">
+                <canvas id="mainChart" height="100"></canvas>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-3xl shadow-sm">
+                    <h4 class="font-bold text-lg mb-4">Expense Analysis</h4>
+                    <p class="text-sm text-gray-400 mb-6">Comprehensive expense tracking and management via Bill.com</p>
+                    <div class="space-y-4">
+                        <div class="flex justify-between border-b pb-2"><span>Logistics Fuel</span> <span class="font-black text-red-500">-$2,400</span></div>
+                        <div class="flex justify-between border-b pb-2"><span>Ad Revenue</span> <span class="font-black text-green-500">+$8,920</span></div>
+                    </div>
+                </div>
+                <div class="bg-swiftOrange p-8 rounded-3xl shadow-xl text-white">
+                    <h4 class="font-bold text-lg mb-2">Accuracy Guarantee</h4>
+                    <p class="text-sm opacity-80 mb-6">Monthly bank reconciliations performed with precision and expertise.</p>
+                    <div class="text-5xl font-black">100.0%</div>
+                    <p class="text-xs uppercase font-black mt-2">Error-Free Financial Reporting</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+       // State Management
+        let cartCount = 0;
+        let currentPanel = 'market';
+
+        // Navigation & Tab Switching
+        function showPanel(panelId, btn) {
+            // Update UI Panels
+            document.querySelectorAll('.tab-panel').forEach(panel => {
+                panel.classList.remove('active');
+            });
+            document.getElementById(panelId).classList.add('active');
+
+            // Update Sidebar Buttons
+            if (btn) {
+                document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active-link'));
+                btn.classList.add('active-link');
+            }
+
+            // Dynamic Header Title
+            const titles = {
+                market: 'E-Market Explorer',
+                logistics: 'Logistics & Tracking',
+                ads: 'Marketing Solutions',
+                leadership: 'Executive Profile',
+                financials: 'Financial Integrity Hub'
+            };
+            document.getElementById('header-title').innerText = titles[panelId];
+            
+            // Initialize Chart if switching to financials
+            if(panelId === 'financials') initChart();
+        }
+
+        // Global Toast System
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-msg');
+            toastMsg.innerText = msg;
+            toast.classList.remove('hidden');
+            toast.classList.add('animate-bounce');
+            setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('animate-bounce');
+            }, 3000);
+        }
+
+        // Cart Logic
+        function updateCart(amt) {
+            cartCount += amt;
+            document.getElementById('cart-count').innerText = cartCount;
+            document.getElementById('cart-count').classList.add('scale-125', 'text-swiftOrange');
+            setTimeout(() => {
+                document.getElementById('cart-count').classList.remove('scale-125', 'text-swiftOrange');
+            }, 200);
+        }
+
+        // Logistics Tracking Mockup
+        function trackOrder() {
+            const id = document.getElementById('trackingInput').value;
+            if(!id) return showToast("Please enter an ID");
+            
+            const result = document.getElementById('track-result');
+            result.classList.remove('hidden');
+            showToast("Tracking data retrieved");
+        }
+
+        // Financial Chart Initialization
+        function initChart() {
+            const ctx = document.getElementById('mainChart').getContext('2d');
+            if (window.myChart) window.myChart.destroy(); // Prevent memory leaks
+            
+            window.myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                    datasets: [{
+                        label: 'Revenue Growth',
+                        data: [12000, 19000, 15000, 25000, 22000, 30000],
+                        borderColor: '#004aad',
+                        backgroundColor: 'rgba(0, 74, 173, 0.1)',
+                        fill: true,
+                        tension: 0.4
+                    }]
+                },
+                options: { responsive: true, maintainAspectRatio: false }
+            });
+        }
+
+        // Modal Toggle
+        function toggleModal(id) {
+            document.getElementById(id).classList.toggle('active');
+        } 
+    </script>
+</body>
+</html>
